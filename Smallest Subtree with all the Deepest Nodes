@@ -1,0 +1,21 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def subtreeWithAllDeepest(self, root: TreeNode) -> TreeNode:
+        def depthify(node=root):
+            if not node: return 0
+            node.depth = max(depthify(node.left), depthify(node.right)) + 1
+            return node.depth
+
+        depthify()
+        while root:
+            leftdepth = 0 if not root.left else root.left.depth
+            rightdepth = 0 if not root.right else root.right.depth
+            if leftdepth == rightdepth:
+                return root
+            else:
+                root = root.left if leftdepth > rightdepth else root.right
