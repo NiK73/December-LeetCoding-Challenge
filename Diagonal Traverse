@@ -1,0 +1,23 @@
+class Solution:
+    def findDiagonalOrder(self, matrix: List[List[int]]) -> List[int]:
+        if not matrix:
+            return []
+        h, w = len(matrix), len(matrix[0])
+        diagonal_element_dict = collections.defaultdict( list )
+        
+        for y in range(h):
+            for x in range(w):
+                
+                diagonal_index_sum = y + x
+                diagonal_element_dict[ diagonal_index_sum ].append( matrix[y][x] )
+        result = []
+        
+        for diagonal_index_sum, diagonal_elements in diagonal_element_dict.items():
+            
+            if diagonal_index_sum % 2 == 0:
+                result += [ *reversed(diagonal_elements) ]
+            
+            else:
+                result += diagonal_elements
+                
+        return result
